@@ -1,47 +1,44 @@
 package com.bayou.service.vango.start.web;
 
-import java.util.List;
-
-import com.bayou.service.vango.data.model.User;
-import com.bayou.service.vango.data.mapper.UserMapper;
+import com.bayou.service.vango.common.BaseResponse;
+import com.bayou.service.vango.common.exceptions.VangoErrorCode;
+import com.bayou.service.vango.service.LoginService;
+import com.bayou.service.vango.service.request.LoginRequest;
+import com.bayou.service.vango.service.request.MobileCodeRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import javax.annotation.Resource;
+import javax.validation.Valid;
 
-@RestController
+@Controller
+@RequestMapping(value = "/api/passport")
 public class UserController {
 
-    @Autowired
-    private UserMapper userMapper;
+    private Logger logger = LoggerFactory.getLogger(getClass());
 
-    @RequestMapping("/getUsers")
-    public List<User> getUsers() {
-        List<User> users=userMapper.getAll();
-        return users;
+    @Resource
+    private LoginService loginService;
+
+    @ResponseBody
+    @RequestMapping(value = "/mobile/code/request", method = {RequestMethod.GET, RequestMethod.POST})
+    public BaseResponse requestMobileCodeV3(@Valid @RequestBody MobileCodeRequest request, BindingResult bindingResult) {
+        logger.info("request mobile code v3 {}", request);
+
+        return loginService.requestMobileCode(request);
     }
 
-    @RequestMapping("/getUser")
-    public User getUser(Long id) {
-        User user=userMapper.getOne(id);
-        return user;
+    @ResponseBody
+    @RequestMapping(value = "/login", method = {RequestMethod.GET, RequestMethod.POST})
+    public BaseResponse login(@Valid @RequestBody LoginRequest request, BindingResult bindingResult) {
+        logger.info("login user {}", request);
+        return loginService.loginByMobile(request);
     }
-
-    @RequestMapping("/add")
-    public void save(User user) {
-        userMapper.insert(user);
-    }
-
-    @RequestMapping(value="update")
-    public void update(User user) {
-        userMapper.update(user);
-    }
-
-    @RequestMapping(value="/delete/{id}")
-    public void delete(@PathVariable("id") Long id) {
-        userMapper.delete(id);
-    }
-
-
 }
