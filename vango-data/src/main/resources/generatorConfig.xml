@@ -67,10 +67,5 @@
             <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
 
-        <!-- 配置表信息 -->
-        <!--<table tableName="student" domainObjectName="Student" enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
-        <table tableName="baili_quartz_job" domainObjectName="QuartzJob"></table>
-
     </context>
 </generatorConfiguration>
