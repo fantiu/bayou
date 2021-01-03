@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bayou.service.vango.data.mapper.UserAddressDAO">
+  <resultMap id="BaseResultMap" type="com.bayou.service.vango.data.model.UserAddress">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="uid" jdbcType="BIGINT" property="uid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="type" jdbcType="TINYINT" property="type" />
+    <result column="province_id" jdbcType="INTEGER" property="provinceId" />
+    <result column="city_id" jdbcType="INTEGER" property="cityId" />
+    <result column="district_id" jdbcType="INTEGER" property="districtId" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="mobile" jdbcType="CHAR" property="mobile" />
+    <result column="is_deleted" jdbcType="TINYINT" property="isDeleted" />
+    <result column="is_default" jdbcType="TINYINT" property="isDefault" />
+    <result column="ctime" jdbcType="INTEGER" property="ctime" />
+    <result column="mtime" jdbcType="INTEGER" property="mtime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, `uid`, `name`, `type`, province_id, city_id, district_id, address, mobile, is_deleted, 
+    is_default, ctime, mtime
+  </sql>
+  <select id="selectByExample" parameterType="com.bayou.service.vango.data.model.UserAddressExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from user_address
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user_address
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from user_address
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.bayou.service.vango.data.model.UserAddressExample">
+    delete from user_address
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.bayou.service.vango.data.model.UserAddress">
+    insert into user_address (id, `uid`, `name`, 
+      `type`, province_id, city_id, 
+      district_id, address, mobile, 
+      is_deleted, is_default, ctime, 
+      mtime)
+    values (#{id,jdbcType=INTEGER}, #{uid,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, 
+      #{type,jdbcType=TINYINT}, #{provinceId,jdbcType=INTEGER}, #{cityId,jdbcType=INTEGER}, 
+      #{districtId,jdbcType=INTEGER}, #{address,jdbcType=VARCHAR}, #{mobile,jdbcType=CHAR}, 
+      #{isDeleted,jdbcType=TINYINT}, #{isDefault,jdbcType=TINYINT}, #{ctime,jdbcType=INTEGER}, 
+      #{mtime,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bayou.service.vango.data.model.UserAddress">
+    insert into user_address
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="uid != null">
+        `uid`,
+      </if>
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="type != null">
+        `type`,
+      </if>
+      <if test="provinceId != null">
+        province_id,
+      </if>
+      <if test="cityId != null">
+        city_id,
+      </if>
+      <if test="districtId != null">
+        district_id,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="mobile != null">
+        mobile,
+      </if>
+      <if test="isDeleted != null">
+        is_deleted,
+      </if>
+      <if test="isDefault != null">
+        is_default,
+      </if>
+      <if test="ctime != null">
+        ctime,
+      </if>
+      <if test="mtime != null">
+        mtime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="provinceId != null">
+        #{provinceId,jdbcType=INTEGER},
+      </if>
+      <if test="cityId != null">
+        #{cityId,jdbcType=INTEGER},
+      </if>
+      <if test="districtId != null">
+        #{districtId,jdbcType=INTEGER},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        #{mobile,jdbcType=CHAR},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=TINYINT},
+      </if>
+      <if test="isDefault != null">
+        #{isDefault,jdbcType=TINYINT},
+      </if>
+      <if test="ctime != null">
+        #{ctime,jdbcType=INTEGER},
+      </if>
+      <if test="mtime != null">
+        #{mtime,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.bayou.service.vango.data.model.UserAddressExample" resultType="java.lang.Long">
+    select count(*) from user_address
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update user_address
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.uid != null">
+        `uid` = #{record.uid,jdbcType=BIGINT},
+      </if>
+      <if test="record.name != null">
+        `name` = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null">
+        `type` = #{record.type,jdbcType=TINYINT},
+      </if>
+      <if test="record.provinceId != null">
+        province_id = #{record.provinceId,jdbcType=INTEGER},
+      </if>
+      <if test="record.cityId != null">
+        city_id = #{record.cityId,jdbcType=INTEGER},
+      </if>
+      <if test="record.districtId != null">
+        district_id = #{record.districtId,jdbcType=INTEGER},
+      </if>
+      <if test="record.address != null">
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mobile != null">
+        mobile = #{record.mobile,jdbcType=CHAR},
+      </if>
+      <if test="record.isDeleted != null">
+        is_deleted = #{record.isDeleted,jdbcType=TINYINT},
+      </if>
+      <if test="record.isDefault != null">
+        is_default = #{record.isDefault,jdbcType=TINYINT},
+      </if>
+      <if test="record.ctime != null">
+        ctime = #{record.ctime,jdbcType=INTEGER},
+      </if>
+      <if test="record.mtime != null">
+        mtime = #{record.mtime,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update user_address
+    set id = #{record.id,jdbcType=INTEGER},
+      `uid` = #{record.uid,jdbcType=BIGINT},
+      `name` = #{record.name,jdbcType=VARCHAR},
+      `type` = #{record.type,jdbcType=TINYINT},
+      province_id = #{record.provinceId,jdbcType=INTEGER},
+      city_id = #{record.cityId,jdbcType=INTEGER},
+      district_id = #{record.districtId,jdbcType=INTEGER},
+      address = #{record.address,jdbcType=VARCHAR},
+      mobile = #{record.mobile,jdbcType=CHAR},
+      is_deleted = #{record.isDeleted,jdbcType=TINYINT},
+      is_default = #{record.isDefault,jdbcType=TINYINT},
+      ctime = #{record.ctime,jdbcType=INTEGER},
+      mtime = #{record.mtime,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bayou.service.vango.data.model.UserAddress">
+    update user_address
+    <set>
+      <if test="uid != null">
+        `uid` = #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        `type` = #{type,jdbcType=TINYINT},
+      </if>
+      <if test="provinceId != null">
+        province_id = #{provinceId,jdbcType=INTEGER},
+      </if>
+      <if test="cityId != null">
+        city_id = #{cityId,jdbcType=INTEGER},
+      </if>
+      <if test="districtId != null">
+        district_id = #{districtId,jdbcType=INTEGER},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        mobile = #{mobile,jdbcType=CHAR},
+      </if>
+      <if test="isDeleted != null">
+        is_deleted = #{isDeleted,jdbcType=TINYINT},
+      </if>
+      <if test="isDefault != null">
+        is_default = #{isDefault,jdbcType=TINYINT},
+      </if>
+      <if test="ctime != null">
+        ctime = #{ctime,jdbcType=INTEGER},
+      </if>
+      <if test="mtime != null">
+        mtime = #{mtime,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bayou.service.vango.data.model.UserAddress">
+    update user_address
+    set `uid` = #{uid,jdbcType=BIGINT},
+      `name` = #{name,jdbcType=VARCHAR},
+      `type` = #{type,jdbcType=TINYINT},
+      province_id = #{provinceId,jdbcType=INTEGER},
+      city_id = #{cityId,jdbcType=INTEGER},
+      district_id = #{districtId,jdbcType=INTEGER},
+      address = #{address,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=CHAR},
+      is_deleted = #{isDeleted,jdbcType=TINYINT},
+      is_default = #{isDefault,jdbcType=TINYINT},
+      ctime = #{ctime,jdbcType=INTEGER},
+      mtime = #{mtime,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

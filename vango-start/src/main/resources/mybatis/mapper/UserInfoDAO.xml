@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bayou.service.vango.data.mapper.UserInfoDAO">
+  <resultMap id="BaseResultMap" type="com.bayou.service.vango.data.model.UserInfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="uid" jdbcType="BIGINT" property="uid" />
+    <result column="mobile" jdbcType="CHAR" property="mobile" />
+    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+    <result column="gender" jdbcType="TINYINT" property="gender" />
+    <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+    <result column="birthday" jdbcType="BIGINT" property="birthday" />
+    <result column="created_ip" jdbcType="VARCHAR" property="createdIp" />
+    <result column="ctime" jdbcType="INTEGER" property="ctime" />
+    <result column="mtime" jdbcType="INTEGER" property="mtime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, `uid`, mobile, nickname, gender, avatar, birthday, created_ip, ctime, mtime
+  </sql>
+  <select id="selectByExample" parameterType="com.bayou.service.vango.data.model.UserInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from user_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from user_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.bayou.service.vango.data.model.UserInfoExample">
+    delete from user_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.bayou.service.vango.data.model.UserInfo">
+    insert into user_info (id, `uid`, mobile, 
+      nickname, gender, avatar, 
+      birthday, created_ip, ctime, 
+      mtime)
+    values (#{id,jdbcType=INTEGER}, #{uid,jdbcType=BIGINT}, #{mobile,jdbcType=CHAR}, 
+      #{nickname,jdbcType=VARCHAR}, #{gender,jdbcType=TINYINT}, #{avatar,jdbcType=VARCHAR}, 
+      #{birthday,jdbcType=BIGINT}, #{createdIp,jdbcType=VARCHAR}, #{ctime,jdbcType=INTEGER}, 
+      #{mtime,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bayou.service.vango.data.model.UserInfo">
+    insert into user_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="uid != null">
+        `uid`,
+      </if>
+      <if test="mobile != null">
+        mobile,
+      </if>
+      <if test="nickname != null">
+        nickname,
+      </if>
+      <if test="gender != null">
+        gender,
+      </if>
+      <if test="avatar != null">
+        avatar,
+      </if>
+      <if test="birthday != null">
+        birthday,
+      </if>
+      <if test="createdIp != null">
+        created_ip,
+      </if>
+      <if test="ctime != null">
+        ctime,
+      </if>
+      <if test="mtime != null">
+        mtime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="mobile != null">
+        #{mobile,jdbcType=CHAR},
+      </if>
+      <if test="nickname != null">
+        #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        #{gender,jdbcType=TINYINT},
+      </if>
+      <if test="avatar != null">
+        #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        #{birthday,jdbcType=BIGINT},
+      </if>
+      <if test="createdIp != null">
+        #{createdIp,jdbcType=VARCHAR},
+      </if>
+      <if test="ctime != null">
+        #{ctime,jdbcType=INTEGER},
+      </if>
+      <if test="mtime != null">
+        #{mtime,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.bayou.service.vango.data.model.UserInfoExample" resultType="java.lang.Long">
+    select count(*) from user_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update user_info
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.uid != null">
+        `uid` = #{record.uid,jdbcType=BIGINT},
+      </if>
+      <if test="record.mobile != null">
+        mobile = #{record.mobile,jdbcType=CHAR},
+      </if>
+      <if test="record.nickname != null">
+        nickname = #{record.nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gender != null">
+        gender = #{record.gender,jdbcType=TINYINT},
+      </if>
+      <if test="record.avatar != null">
+        avatar = #{record.avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="record.birthday != null">
+        birthday = #{record.birthday,jdbcType=BIGINT},
+      </if>
+      <if test="record.createdIp != null">
+        created_ip = #{record.createdIp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ctime != null">
+        ctime = #{record.ctime,jdbcType=INTEGER},
+      </if>
+      <if test="record.mtime != null">
+        mtime = #{record.mtime,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update user_info
+    set id = #{record.id,jdbcType=INTEGER},
+      `uid` = #{record.uid,jdbcType=BIGINT},
+      mobile = #{record.mobile,jdbcType=CHAR},
+      nickname = #{record.nickname,jdbcType=VARCHAR},
+      gender = #{record.gender,jdbcType=TINYINT},
+      avatar = #{record.avatar,jdbcType=VARCHAR},
+      birthday = #{record.birthday,jdbcType=BIGINT},
+      created_ip = #{record.createdIp,jdbcType=VARCHAR},
+      ctime = #{record.ctime,jdbcType=INTEGER},
+      mtime = #{record.mtime,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bayou.service.vango.data.model.UserInfo">
+    update user_info
+    <set>
+      <if test="uid != null">
+        `uid` = #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="mobile != null">
+        mobile = #{mobile,jdbcType=CHAR},
+      </if>
+      <if test="nickname != null">
+        nickname = #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        gender = #{gender,jdbcType=TINYINT},
+      </if>
+      <if test="avatar != null">
+        avatar = #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        birthday = #{birthday,jdbcType=BIGINT},
+      </if>
+      <if test="createdIp != null">
+        created_ip = #{createdIp,jdbcType=VARCHAR},
+      </if>
+      <if test="ctime != null">
+        ctime = #{ctime,jdbcType=INTEGER},
+      </if>
+      <if test="mtime != null">
+        mtime = #{mtime,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bayou.service.vango.data.model.UserInfo">
+    update user_info
+    set `uid` = #{uid,jdbcType=BIGINT},
+      mobile = #{mobile,jdbcType=CHAR},
+      nickname = #{nickname,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=TINYINT},
+      avatar = #{avatar,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=BIGINT},
+      created_ip = #{createdIp,jdbcType=VARCHAR},
+      ctime = #{ctime,jdbcType=INTEGER},
+      mtime = #{mtime,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

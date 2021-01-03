@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bayou.service.vango.data.mapper.UserDeviceDAO">
+  <resultMap id="BaseResultMap" type="com.bayou.service.vango.data.model.UserDevice">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="uid" jdbcType="BIGINT" property="uid" />
+    <result column="device_token" jdbcType="VARCHAR" property="deviceToken" />
+    <result column="push_enabled" jdbcType="TINYINT" property="pushEnabled" />
+    <result column="platform" jdbcType="VARCHAR" property="platform" />
+    <result column="record_time" jdbcType="BIGINT" property="recordTime" />
+    <result column="app_version" jdbcType="VARCHAR" property="appVersion" />
+    <result column="device_id" jdbcType="VARCHAR" property="deviceId" />
+    <result column="install_id" jdbcType="VARCHAR" property="installId" />
+    <result column="ctime" jdbcType="INTEGER" property="ctime" />
+    <result column="mtime" jdbcType="INTEGER" property="mtime" />
+    <result column="is_login" jdbcType="TINYINT" property="isLogin" />
+    <result column="device_type" jdbcType="VARCHAR" property="deviceType" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, `uid`, device_token, push_enabled, platform, record_time, app_version, device_id, 
+    install_id, ctime, mtime, is_login, device_type
+  </sql>
+  <select id="selectByExample" parameterType="com.bayou.service.vango.data.model.UserDeviceExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from user_device
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user_device
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from user_device
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.bayou.service.vango.data.model.UserDeviceExample">
+    delete from user_device
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.bayou.service.vango.data.model.UserDevice">
+    insert into user_device (id, `uid`, device_token, 
+      push_enabled, platform, record_time, 
+      app_version, device_id, install_id, 
+      ctime, mtime, is_login, 
+      device_type)
+    values (#{id,jdbcType=BIGINT}, #{uid,jdbcType=BIGINT}, #{deviceToken,jdbcType=VARCHAR}, 
+      #{pushEnabled,jdbcType=TINYINT}, #{platform,jdbcType=VARCHAR}, #{recordTime,jdbcType=BIGINT}, 
+      #{appVersion,jdbcType=VARCHAR}, #{deviceId,jdbcType=VARCHAR}, #{installId,jdbcType=VARCHAR}, 
+      #{ctime,jdbcType=INTEGER}, #{mtime,jdbcType=INTEGER}, #{isLogin,jdbcType=TINYINT}, 
+      #{deviceType,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bayou.service.vango.data.model.UserDevice">
+    insert into user_device
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="uid != null">
+        `uid`,
+      </if>
+      <if test="deviceToken != null">
+        device_token,
+      </if>
+      <if test="pushEnabled != null">
+        push_enabled,
+      </if>
+      <if test="platform != null">
+        platform,
+      </if>
+      <if test="recordTime != null">
+        record_time,
+      </if>
+      <if test="appVersion != null">
+        app_version,
+      </if>
+      <if test="deviceId != null">
+        device_id,
+      </if>
+      <if test="installId != null">
+        install_id,
+      </if>
+      <if test="ctime != null">
+        ctime,
+      </if>
+      <if test="mtime != null">
+        mtime,
+      </if>
+      <if test="isLogin != null">
+        is_login,
+      </if>
+      <if test="deviceType != null">
+        device_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="deviceToken != null">
+        #{deviceToken,jdbcType=VARCHAR},
+      </if>
+      <if test="pushEnabled != null">
+        #{pushEnabled,jdbcType=TINYINT},
+      </if>
+      <if test="platform != null">
+        #{platform,jdbcType=VARCHAR},
+      </if>
+      <if test="recordTime != null">
+        #{recordTime,jdbcType=BIGINT},
+      </if>
+      <if test="appVersion != null">
+        #{appVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceId != null">
+        #{deviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="installId != null">
+        #{installId,jdbcType=VARCHAR},
+      </if>
+      <if test="ctime != null">
+        #{ctime,jdbcType=INTEGER},
+      </if>
+      <if test="mtime != null">
+        #{mtime,jdbcType=INTEGER},
+      </if>
+      <if test="isLogin != null">
+        #{isLogin,jdbcType=TINYINT},
+      </if>
+      <if test="deviceType != null">
+        #{deviceType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.bayou.service.vango.data.model.UserDeviceExample" resultType="java.lang.Long">
+    select count(*) from user_device
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update user_device
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.uid != null">
+        `uid` = #{record.uid,jdbcType=BIGINT},
+      </if>
+      <if test="record.deviceToken != null">
+        device_token = #{record.deviceToken,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pushEnabled != null">
+        push_enabled = #{record.pushEnabled,jdbcType=TINYINT},
+      </if>
+      <if test="record.platform != null">
+        platform = #{record.platform,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordTime != null">
+        record_time = #{record.recordTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.appVersion != null">
+        app_version = #{record.appVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deviceId != null">
+        device_id = #{record.deviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.installId != null">
+        install_id = #{record.installId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ctime != null">
+        ctime = #{record.ctime,jdbcType=INTEGER},
+      </if>
+      <if test="record.mtime != null">
+        mtime = #{record.mtime,jdbcType=INTEGER},
+      </if>
+      <if test="record.isLogin != null">
+        is_login = #{record.isLogin,jdbcType=TINYINT},
+      </if>
+      <if test="record.deviceType != null">
+        device_type = #{record.deviceType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update user_device
+    set id = #{record.id,jdbcType=BIGINT},
+      `uid` = #{record.uid,jdbcType=BIGINT},
+      device_token = #{record.deviceToken,jdbcType=VARCHAR},
+      push_enabled = #{record.pushEnabled,jdbcType=TINYINT},
+      platform = #{record.platform,jdbcType=VARCHAR},
+      record_time = #{record.recordTime,jdbcType=BIGINT},
+      app_version = #{record.appVersion,jdbcType=VARCHAR},
+      device_id = #{record.deviceId,jdbcType=VARCHAR},
+      install_id = #{record.installId,jdbcType=VARCHAR},
+      ctime = #{record.ctime,jdbcType=INTEGER},
+      mtime = #{record.mtime,jdbcType=INTEGER},
+      is_login = #{record.isLogin,jdbcType=TINYINT},
+      device_type = #{record.deviceType,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bayou.service.vango.data.model.UserDevice">
+    update user_device
+    <set>
+      <if test="uid != null">
+        `uid` = #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="deviceToken != null">
+        device_token = #{deviceToken,jdbcType=VARCHAR},
+      </if>
+      <if test="pushEnabled != null">
+        push_enabled = #{pushEnabled,jdbcType=TINYINT},
+      </if>
+      <if test="platform != null">
+        platform = #{platform,jdbcType=VARCHAR},
+      </if>
+      <if test="recordTime != null">
+        record_time = #{recordTime,jdbcType=BIGINT},
+      </if>
+      <if test="appVersion != null">
+        app_version = #{appVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceId != null">
+        device_id = #{deviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="installId != null">
+        install_id = #{installId,jdbcType=VARCHAR},
+      </if>
+      <if test="ctime != null">
+        ctime = #{ctime,jdbcType=INTEGER},
+      </if>
+      <if test="mtime != null">
+        mtime = #{mtime,jdbcType=INTEGER},
+      </if>
+      <if test="isLogin != null">
+        is_login = #{isLogin,jdbcType=TINYINT},
+      </if>
+      <if test="deviceType != null">
+        device_type = #{deviceType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bayou.service.vango.data.model.UserDevice">
+    update user_device
+    set `uid` = #{uid,jdbcType=BIGINT},
+      device_token = #{deviceToken,jdbcType=VARCHAR},
+      push_enabled = #{pushEnabled,jdbcType=TINYINT},
+      platform = #{platform,jdbcType=VARCHAR},
+      record_time = #{recordTime,jdbcType=BIGINT},
+      app_version = #{appVersion,jdbcType=VARCHAR},
+      device_id = #{deviceId,jdbcType=VARCHAR},
+      install_id = #{installId,jdbcType=VARCHAR},
+      ctime = #{ctime,jdbcType=INTEGER},
+      mtime = #{mtime,jdbcType=INTEGER},
+      is_login = #{isLogin,jdbcType=TINYINT},
+      device_type = #{deviceType,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

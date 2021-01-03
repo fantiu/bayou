@@ -1,0 +1,503 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bayou.service.vango.data.mapper.PayListDAO">
+  <resultMap id="BaseResultMap" type="com.bayou.service.vango.data.model.PayList">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_uid" jdbcType="BIGINT" property="userUid" />
+    <result column="pay_no" jdbcType="BIGINT" property="payNo" />
+    <result column="trade_no" jdbcType="VARCHAR" property="tradeNo" />
+    <result column="order_type" jdbcType="SMALLINT" property="orderType" />
+    <result column="order_uid" jdbcType="BIGINT" property="orderUid" />
+    <result column="pay_way" jdbcType="TINYINT" property="payWay" />
+    <result column="pay_status" jdbcType="SMALLINT" property="payStatus" />
+    <result column="step" jdbcType="SMALLINT" property="step" />
+    <result column="post_status" jdbcType="SMALLINT" property="postStatus" />
+    <result column="return_status" jdbcType="SMALLINT" property="returnStatus" />
+    <result column="total_fee" jdbcType="DECIMAL" property="totalFee" />
+    <result column="result_code" jdbcType="VARCHAR" property="resultCode" />
+    <result column="err_code_str" jdbcType="VARCHAR" property="errCodeStr" />
+    <result column="currency" jdbcType="VARCHAR" property="currency" />
+    <result column="ip2long" jdbcType="INTEGER" property="ip2long" />
+    <result column="post_json" jdbcType="VARCHAR" property="postJson" />
+    <result column="return_json" jdbcType="VARCHAR" property="returnJson" />
+    <result column="mtime" jdbcType="INTEGER" property="mtime" />
+    <result column="ctime" jdbcType="INTEGER" property="ctime" />
+    <result column="success_at" jdbcType="INTEGER" property="successAt" />
+    <result column="procedure_kb" jdbcType="INTEGER" property="procedureKb" />
+    <result column="procedure_fee" jdbcType="DECIMAL" property="procedureFee" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, user_uid, pay_no, trade_no, order_type, order_uid, pay_way, pay_status, step, 
+    post_status, return_status, total_fee, result_code, err_code_str, currency, ip2long, 
+    post_json, return_json, mtime, ctime, success_at, procedure_kb, procedure_fee
+  </sql>
+  <select id="selectByExample" parameterType="com.bayou.service.vango.data.model.PayListExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pay_list
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from pay_list
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from pay_list
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.bayou.service.vango.data.model.PayListExample">
+    delete from pay_list
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.bayou.service.vango.data.model.PayList">
+    insert into pay_list (id, user_uid, pay_no, 
+      trade_no, order_type, order_uid, 
+      pay_way, pay_status, step, 
+      post_status, return_status, total_fee, 
+      result_code, err_code_str, currency, 
+      ip2long, post_json, return_json, 
+      mtime, ctime, success_at, 
+      procedure_kb, procedure_fee)
+    values (#{id,jdbcType=INTEGER}, #{userUid,jdbcType=BIGINT}, #{payNo,jdbcType=BIGINT}, 
+      #{tradeNo,jdbcType=VARCHAR}, #{orderType,jdbcType=SMALLINT}, #{orderUid,jdbcType=BIGINT}, 
+      #{payWay,jdbcType=TINYINT}, #{payStatus,jdbcType=SMALLINT}, #{step,jdbcType=SMALLINT}, 
+      #{postStatus,jdbcType=SMALLINT}, #{returnStatus,jdbcType=SMALLINT}, #{totalFee,jdbcType=DECIMAL}, 
+      #{resultCode,jdbcType=VARCHAR}, #{errCodeStr,jdbcType=VARCHAR}, #{currency,jdbcType=VARCHAR}, 
+      #{ip2long,jdbcType=INTEGER}, #{postJson,jdbcType=VARCHAR}, #{returnJson,jdbcType=VARCHAR}, 
+      #{mtime,jdbcType=INTEGER}, #{ctime,jdbcType=INTEGER}, #{successAt,jdbcType=INTEGER}, 
+      #{procedureKb,jdbcType=INTEGER}, #{procedureFee,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bayou.service.vango.data.model.PayList">
+    insert into pay_list
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userUid != null">
+        user_uid,
+      </if>
+      <if test="payNo != null">
+        pay_no,
+      </if>
+      <if test="tradeNo != null">
+        trade_no,
+      </if>
+      <if test="orderType != null">
+        order_type,
+      </if>
+      <if test="orderUid != null">
+        order_uid,
+      </if>
+      <if test="payWay != null">
+        pay_way,
+      </if>
+      <if test="payStatus != null">
+        pay_status,
+      </if>
+      <if test="step != null">
+        step,
+      </if>
+      <if test="postStatus != null">
+        post_status,
+      </if>
+      <if test="returnStatus != null">
+        return_status,
+      </if>
+      <if test="totalFee != null">
+        total_fee,
+      </if>
+      <if test="resultCode != null">
+        result_code,
+      </if>
+      <if test="errCodeStr != null">
+        err_code_str,
+      </if>
+      <if test="currency != null">
+        currency,
+      </if>
+      <if test="ip2long != null">
+        ip2long,
+      </if>
+      <if test="postJson != null">
+        post_json,
+      </if>
+      <if test="returnJson != null">
+        return_json,
+      </if>
+      <if test="mtime != null">
+        mtime,
+      </if>
+      <if test="ctime != null">
+        ctime,
+      </if>
+      <if test="successAt != null">
+        success_at,
+      </if>
+      <if test="procedureKb != null">
+        procedure_kb,
+      </if>
+      <if test="procedureFee != null">
+        procedure_fee,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userUid != null">
+        #{userUid,jdbcType=BIGINT},
+      </if>
+      <if test="payNo != null">
+        #{payNo,jdbcType=BIGINT},
+      </if>
+      <if test="tradeNo != null">
+        #{tradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderType != null">
+        #{orderType,jdbcType=SMALLINT},
+      </if>
+      <if test="orderUid != null">
+        #{orderUid,jdbcType=BIGINT},
+      </if>
+      <if test="payWay != null">
+        #{payWay,jdbcType=TINYINT},
+      </if>
+      <if test="payStatus != null">
+        #{payStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="step != null">
+        #{step,jdbcType=SMALLINT},
+      </if>
+      <if test="postStatus != null">
+        #{postStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="returnStatus != null">
+        #{returnStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="totalFee != null">
+        #{totalFee,jdbcType=DECIMAL},
+      </if>
+      <if test="resultCode != null">
+        #{resultCode,jdbcType=VARCHAR},
+      </if>
+      <if test="errCodeStr != null">
+        #{errCodeStr,jdbcType=VARCHAR},
+      </if>
+      <if test="currency != null">
+        #{currency,jdbcType=VARCHAR},
+      </if>
+      <if test="ip2long != null">
+        #{ip2long,jdbcType=INTEGER},
+      </if>
+      <if test="postJson != null">
+        #{postJson,jdbcType=VARCHAR},
+      </if>
+      <if test="returnJson != null">
+        #{returnJson,jdbcType=VARCHAR},
+      </if>
+      <if test="mtime != null">
+        #{mtime,jdbcType=INTEGER},
+      </if>
+      <if test="ctime != null">
+        #{ctime,jdbcType=INTEGER},
+      </if>
+      <if test="successAt != null">
+        #{successAt,jdbcType=INTEGER},
+      </if>
+      <if test="procedureKb != null">
+        #{procedureKb,jdbcType=INTEGER},
+      </if>
+      <if test="procedureFee != null">
+        #{procedureFee,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.bayou.service.vango.data.model.PayListExample" resultType="java.lang.Long">
+    select count(*) from pay_list
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update pay_list
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.userUid != null">
+        user_uid = #{record.userUid,jdbcType=BIGINT},
+      </if>
+      <if test="record.payNo != null">
+        pay_no = #{record.payNo,jdbcType=BIGINT},
+      </if>
+      <if test="record.tradeNo != null">
+        trade_no = #{record.tradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderType != null">
+        order_type = #{record.orderType,jdbcType=SMALLINT},
+      </if>
+      <if test="record.orderUid != null">
+        order_uid = #{record.orderUid,jdbcType=BIGINT},
+      </if>
+      <if test="record.payWay != null">
+        pay_way = #{record.payWay,jdbcType=TINYINT},
+      </if>
+      <if test="record.payStatus != null">
+        pay_status = #{record.payStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="record.step != null">
+        step = #{record.step,jdbcType=SMALLINT},
+      </if>
+      <if test="record.postStatus != null">
+        post_status = #{record.postStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="record.returnStatus != null">
+        return_status = #{record.returnStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="record.totalFee != null">
+        total_fee = #{record.totalFee,jdbcType=DECIMAL},
+      </if>
+      <if test="record.resultCode != null">
+        result_code = #{record.resultCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.errCodeStr != null">
+        err_code_str = #{record.errCodeStr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.currency != null">
+        currency = #{record.currency,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ip2long != null">
+        ip2long = #{record.ip2long,jdbcType=INTEGER},
+      </if>
+      <if test="record.postJson != null">
+        post_json = #{record.postJson,jdbcType=VARCHAR},
+      </if>
+      <if test="record.returnJson != null">
+        return_json = #{record.returnJson,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mtime != null">
+        mtime = #{record.mtime,jdbcType=INTEGER},
+      </if>
+      <if test="record.ctime != null">
+        ctime = #{record.ctime,jdbcType=INTEGER},
+      </if>
+      <if test="record.successAt != null">
+        success_at = #{record.successAt,jdbcType=INTEGER},
+      </if>
+      <if test="record.procedureKb != null">
+        procedure_kb = #{record.procedureKb,jdbcType=INTEGER},
+      </if>
+      <if test="record.procedureFee != null">
+        procedure_fee = #{record.procedureFee,jdbcType=DECIMAL},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update pay_list
+    set id = #{record.id,jdbcType=INTEGER},
+      user_uid = #{record.userUid,jdbcType=BIGINT},
+      pay_no = #{record.payNo,jdbcType=BIGINT},
+      trade_no = #{record.tradeNo,jdbcType=VARCHAR},
+      order_type = #{record.orderType,jdbcType=SMALLINT},
+      order_uid = #{record.orderUid,jdbcType=BIGINT},
+      pay_way = #{record.payWay,jdbcType=TINYINT},
+      pay_status = #{record.payStatus,jdbcType=SMALLINT},
+      step = #{record.step,jdbcType=SMALLINT},
+      post_status = #{record.postStatus,jdbcType=SMALLINT},
+      return_status = #{record.returnStatus,jdbcType=SMALLINT},
+      total_fee = #{record.totalFee,jdbcType=DECIMAL},
+      result_code = #{record.resultCode,jdbcType=VARCHAR},
+      err_code_str = #{record.errCodeStr,jdbcType=VARCHAR},
+      currency = #{record.currency,jdbcType=VARCHAR},
+      ip2long = #{record.ip2long,jdbcType=INTEGER},
+      post_json = #{record.postJson,jdbcType=VARCHAR},
+      return_json = #{record.returnJson,jdbcType=VARCHAR},
+      mtime = #{record.mtime,jdbcType=INTEGER},
+      ctime = #{record.ctime,jdbcType=INTEGER},
+      success_at = #{record.successAt,jdbcType=INTEGER},
+      procedure_kb = #{record.procedureKb,jdbcType=INTEGER},
+      procedure_fee = #{record.procedureFee,jdbcType=DECIMAL}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bayou.service.vango.data.model.PayList">
+    update pay_list
+    <set>
+      <if test="userUid != null">
+        user_uid = #{userUid,jdbcType=BIGINT},
+      </if>
+      <if test="payNo != null">
+        pay_no = #{payNo,jdbcType=BIGINT},
+      </if>
+      <if test="tradeNo != null">
+        trade_no = #{tradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderType != null">
+        order_type = #{orderType,jdbcType=SMALLINT},
+      </if>
+      <if test="orderUid != null">
+        order_uid = #{orderUid,jdbcType=BIGINT},
+      </if>
+      <if test="payWay != null">
+        pay_way = #{payWay,jdbcType=TINYINT},
+      </if>
+      <if test="payStatus != null">
+        pay_status = #{payStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="step != null">
+        step = #{step,jdbcType=SMALLINT},
+      </if>
+      <if test="postStatus != null">
+        post_status = #{postStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="returnStatus != null">
+        return_status = #{returnStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="totalFee != null">
+        total_fee = #{totalFee,jdbcType=DECIMAL},
+      </if>
+      <if test="resultCode != null">
+        result_code = #{resultCode,jdbcType=VARCHAR},
+      </if>
+      <if test="errCodeStr != null">
+        err_code_str = #{errCodeStr,jdbcType=VARCHAR},
+      </if>
+      <if test="currency != null">
+        currency = #{currency,jdbcType=VARCHAR},
+      </if>
+      <if test="ip2long != null">
+        ip2long = #{ip2long,jdbcType=INTEGER},
+      </if>
+      <if test="postJson != null">
+        post_json = #{postJson,jdbcType=VARCHAR},
+      </if>
+      <if test="returnJson != null">
+        return_json = #{returnJson,jdbcType=VARCHAR},
+      </if>
+      <if test="mtime != null">
+        mtime = #{mtime,jdbcType=INTEGER},
+      </if>
+      <if test="ctime != null">
+        ctime = #{ctime,jdbcType=INTEGER},
+      </if>
+      <if test="successAt != null">
+        success_at = #{successAt,jdbcType=INTEGER},
+      </if>
+      <if test="procedureKb != null">
+        procedure_kb = #{procedureKb,jdbcType=INTEGER},
+      </if>
+      <if test="procedureFee != null">
+        procedure_fee = #{procedureFee,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bayou.service.vango.data.model.PayList">
+    update pay_list
+    set user_uid = #{userUid,jdbcType=BIGINT},
+      pay_no = #{payNo,jdbcType=BIGINT},
+      trade_no = #{tradeNo,jdbcType=VARCHAR},
+      order_type = #{orderType,jdbcType=SMALLINT},
+      order_uid = #{orderUid,jdbcType=BIGINT},
+      pay_way = #{payWay,jdbcType=TINYINT},
+      pay_status = #{payStatus,jdbcType=SMALLINT},
+      step = #{step,jdbcType=SMALLINT},
+      post_status = #{postStatus,jdbcType=SMALLINT},
+      return_status = #{returnStatus,jdbcType=SMALLINT},
+      total_fee = #{totalFee,jdbcType=DECIMAL},
+      result_code = #{resultCode,jdbcType=VARCHAR},
+      err_code_str = #{errCodeStr,jdbcType=VARCHAR},
+      currency = #{currency,jdbcType=VARCHAR},
+      ip2long = #{ip2long,jdbcType=INTEGER},
+      post_json = #{postJson,jdbcType=VARCHAR},
+      return_json = #{returnJson,jdbcType=VARCHAR},
+      mtime = #{mtime,jdbcType=INTEGER},
+      ctime = #{ctime,jdbcType=INTEGER},
+      success_at = #{successAt,jdbcType=INTEGER},
+      procedure_kb = #{procedureKb,jdbcType=INTEGER},
+      procedure_fee = #{procedureFee,jdbcType=DECIMAL}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
