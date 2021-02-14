@@ -6,16 +6,16 @@ import org.springframework.stereotype.Component;
 @Component
 public class SmsConfig {
 
-    @Value("${vango.sms.verification.code.ttl}")
+    // @Value("${vango.sms.verification.code.ttl}")
     private Integer ttl;
 
-    @Value("${vango.sms.verification.code.interval}")
+    // @Value("${vango.sms.verification.code.interval}")
     private Integer interval;
 
-    @Value("${vango.sms.verification.code.sign}")
+    // @Value("${vango.sms.verification.code.sign}")
     private String sign;
 
-    @Value("${vango.sms.verification.code.times}")
+    // @Value("${vango.sms.verification.code.times}")
     private Integer times;
 
     public Integer getTtl() {

@@ -1,15 +1,11 @@
 package com.bayou.service.vango.service.request;
 
 import com.bayou.service.vango.common.request.BaseRequest;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.validation.constraints.NotNull;
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class LoginUserRequest extends BaseRequest {
